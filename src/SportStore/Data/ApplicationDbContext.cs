@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SportsStore.Models;
 
@@ -8,6 +9,7 @@ namespace SportStore.Data
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -19,6 +21,35 @@ namespace SportStore.Data
         {
             modelbuiler.Entity<Product>(MapProduct);
             modelbuiler.Entity<City>(MapCity);
+            modelbuiler.Entity<Customer>(MapCustomer);
+        }
+
+        private void MapCustomer(EntityTypeBuilder<Customer> c)
+        {
+            c.ToTable("Customer");
+
+            c.Property(t => t.CustomerName)
+                .IsRequired()
+                .HasMaxLength(20);
+
+            c.Property(t => t.FirstName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            c.Property(t => t.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            c.Property(t => t.Street)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            c.HasOne(t => t.City)
+                .WithMany()
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
         }
 
         private void MapCity(EntityTypeBuilder<City> c)
@@ -28,6 +59,7 @@ namespace SportStore.Data
             c.HasKey(t => t.Postalcode);
 
             c.Property(t => t.Name)
+                .IsRequired()
                 .HasMaxLength(100);
         }
 
