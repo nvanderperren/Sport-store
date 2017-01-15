@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SportsStore.Models
+namespace SportStore.Models
 {
     public class Order
     {
@@ -16,7 +16,7 @@ namespace SportsStore.Models
         public ICollection<OrderLine> OrderLines { get; private set; }
         public decimal Total
         {
-            get { throw new NotImplementedException(); }
+            get { return OrderLines.Sum(p => (p.Quantity * p.Price)); }
         }
         #endregion
 
@@ -52,7 +52,8 @@ namespace SportsStore.Models
         #region Methods
         public bool HasOrdered(Product p)
         {
-            throw new NotImplementedException();
+            return OrderLines.Any(o => o.Product.Equals(p)) ;
+
         }
         #endregion
 

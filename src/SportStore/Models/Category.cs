@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace SportsStore.Models
+namespace SportStore.Models
 {
     public class Category
     {
         #region Properties
         public int CategoryId { get; set; }
         public string Name { get; set; }
-	//category contains 1..many products (a product can belong to 1..many categories)
+        public IList<Product> Products { get; set; }
+	
 
         #endregion
 

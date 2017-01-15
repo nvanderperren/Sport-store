@@ -1,5 +1,5 @@
 ﻿
-namespace SportsStore.Models
+namespace SportStore.Models
 {
     public class OrderLine : CartLine
     {

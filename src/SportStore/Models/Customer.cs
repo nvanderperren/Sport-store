@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportsStore.Models
+namespace SportStore.Models
 {
     public class Customer
     {
@@ -36,10 +36,10 @@ namespace SportsStore.Models
         }
 
         #region Methods
-        //public void PlaceOrder(Cart cart, DateTime? deliveryDate, bool giftwrapping, string shippingStreet, City shippingCity)
-        //{
-        //    Orders.Add(new Order(cart, deliveryDate, giftwrapping, shippingStreet, shippingCity));
-        //}
+        public void PlaceOrder(Cart cart, DateTime? deliveryDate, bool giftwrapping, string shippingStreet, City shippingCity)
+        {
+            Orders.Add(new Order(cart, deliveryDate, giftwrapping, shippingStreet, shippingCity));
+        }
         #endregion
     }
 }

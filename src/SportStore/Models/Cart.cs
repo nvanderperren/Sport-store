@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SportsStore.Models
+namespace SportStore.Models
 {
     public class Cart
     {
@@ -16,7 +16,11 @@ namespace SportsStore.Models
         #region Methods
         public void AddLine(Product product, int quantity)
         {
-            throw new NotImplementedException();
+            CartLine line = _lines.SingleOrDefault(l => l.Product == product);
+            if (line == null)
+                _lines.Add(new CartLine() {Product = product, Quantity = quantity});
+            else
+                line.Quantity += quantity;
         }
 
         public void RemoveLine(Product product)
