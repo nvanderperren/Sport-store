@@ -49,6 +49,17 @@ namespace SportStore.Data
                     _dbContext.Customers.Add(klant);
                 }
 
+                Category watersports = new Category("WaterSports");
+                Category soccer = new Category("Soccer");
+                soccer.AddProduct(football);
+                soccer.AddProduct(cornerflags);
+                soccer.AddProduct(shoes);
+                watersports.AddProduct(shoes);
+                watersports.AddProduct(surfboard);
+                watersports.AddProduct(kayak);
+                watersports.AddProduct(lifeJacket);
+                _dbContext.Categories.AddRange(new Category[] {watersports, soccer});
+
                 _dbContext.SaveChanges();
             }
         }

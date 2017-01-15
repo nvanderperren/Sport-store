@@ -11,6 +11,7 @@ namespace SportStore.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,7 +28,23 @@ namespace SportStore.Data
             modelbuiler.Ignore<CartLine>();
             modelbuiler.Entity<Order>(MapOrder);
             modelbuiler.Entity<OrderLine>(MapOrderLine);
+            modelbuiler.Entity<ProductCategory>(MapProductCategory);
 
+        }
+
+        private void MapProductCategory(EntityTypeBuilder<ProductCategory> pc)
+        {
+            pc.HasKey(t => new {t.CategoryId, t.ProductId});
+
+            pc.HasOne(pt => pt.Category)
+                .WithMany(p => p.Products)
+                .HasForeignKey(pt => pt.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            pc.HasOne(pt => pt.Product)
+                .WithMany()
+                .HasForeignKey(pt => pt.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         private void MapOrderLine(EntityTypeBuilder<OrderLine> o)

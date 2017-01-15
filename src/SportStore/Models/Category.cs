@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SportStore.Models
 {
@@ -8,7 +9,7 @@ namespace SportStore.Models
         #region Properties
         public int CategoryId { get; set; }
         public string Name { get; set; }
-        public IList<Product> Products { get; set; }
+        public ICollection<ProductCategory> Products { get; private set; }
 	
 
         #endregion
@@ -16,12 +17,14 @@ namespace SportStore.Models
         #region Constructor and Methods
         protected Category()
         {
-   
+            Products = new List<ProductCategory>();
+
         }
 
         public Category(string name) : this()
         {
             Name = name;
+            Products = new List<ProductCategory>();
         }
 
 
@@ -32,17 +35,20 @@ namespace SportStore.Models
 
         public void AddProduct(Product product)
         {
-           throw new NotImplementedException();
+            if (FindProduct(product.Name) == null)
+                Products.Add(new ProductCategory(product, this));
+                
         }
 
         public void RemoveProduct(Product product)
         {
-           throw new NotImplementedException();
+            ProductCategory pc = Products.FirstOrDefault(p => p.Product.Equals(product));
+            Products.Remove(pc);
         }
 
         public Product FindProduct(string name)
         {
-           throw new NotImplementedException();
+            return Products.FirstOrDefault(p => p.Product.Name == name)?.Product ;
         }
         #endregion
     }
